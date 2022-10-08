@@ -34,10 +34,12 @@ def load_today_acoes_df():
 
     dfs = []
     for file in files_to_load:
+        print(f' > > lendo arquivo {AWS_BUCKET}/{file} do S3...')
         df = pd.read_json(f"s3://{AWS_BUCKET}/{file}", storage_options=storage_options, lines=True)
         dfs.append(df)
 
     df_final = pd.concat(dfs, axis=0)
+    print(' > > dataframe criado com sucesso!')
     return df_final
 
 def get_prices_from_alerts(df):
@@ -75,14 +77,19 @@ def get_prices_from_alerts(df):
         """)
         resultado = cur.fetchall()
         for acao_sigla, valor_minimo, valor_maximo, nome, email in resultado:
+            print(f' > > alerta cadastrado para ação {acao_sigla}')
             preco_fechamento = df[df['sigla'] == acao_sigla]['price'][0]
             if valor_minimo != None:
+                print(f' > > > valor minimo ação {valor_minimo} | valor fechamento ação {preco_fechamento}')
                 if preco_fechamento < valor_minimo:
+                    print(f' > > > > atingiu critério de valor mínimo! gerando alerta...')
                     feed_dict_result(email, nome, acao_sigla, 'minimo', float(valor_minimo), float(preco_fechamento))
             if valor_maximo != None:
+                print(f' > > > valor maximo ação {valor_maximo} | valor fechamento ação {preco_fechamento}')
                 if preco_fechamento > valor_maximo:
+                    print(f' > > > > atingiu critério de valor máximo! gerando alerta...')
                     feed_dict_result(email, nome, acao_sigla, 'maximo', float(valor_maximo), float(preco_fechamento))            
-
+    print(' > > comparações finalizadas com sucesso...')
     return dict_result
 
 def main():
