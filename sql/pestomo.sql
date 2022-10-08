@@ -736,7 +736,7 @@ INSERT INTO public.acoes_b3 (nome, sigla) VALUES ('XP Inc', 'XPBR31');
 --
 
 INSERT INTO public.alertas_configurados (id, usuario_id, acao_sigla, valor_minimo, valor_maximo, disparo) VALUES (1, 2, 'ITSA4', NULL, 8.67, 'DIARIO');
-INSERT INTO public.alertas_configurados (id, usuario_id, acao_sigla, valor_minimo, valor_maximo, disparo) VALUES (2, 2, 'ENG11', 46.10, NULL, 'DIARIO');
+INSERT INTO public.alertas_configurados (id, usuario_id, acao_sigla, valor_minimo, valor_maximo, disparo) VALUES (2, 2, 'ENGI11', 46.10, NULL, 'DIARIO');
 
 
 --
